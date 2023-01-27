@@ -1,26 +1,45 @@
-let checkType = function(value,cvalue, type, method){
-    if (type == null || type == undefined){
-        console.log('ReferenceError')
-        return undefined
+// function for checking type and arithmetic logic 
+    let checkType = function(value,cvalue, type, method){
+        if (type == null || type == undefined){
+            console.log('ReferenceError')
+            return undefined
+        }
+        else{ 
+        if(method === 'plus'){  
+            if (type === 'number'|| type === 'float'){
+                result = (value += cvalue)
+            }
+            if(type === 'string'){
+                //convert string to number
+                result = (value += (+cvalue))
+            }
+        }
+        if (method === 'minus'){
+            if (type === 'number'|| type === 'float'){
+                result = (value -= cvalue)
+            }
+            if(type === 'string'){
+                result = (value -= (+cvalue))
+            }
+        }
+        if(method === 'divide'){
+            if (type === 'number'|| type === 'float'){
+                result = (value / cvalue)
+            }
+            if(type === 'string'){
+                result = (value / (+cvalue))
+            }
+        }
+        if (method === 'multiply'){
+            if (type === 'number'|| type === 'float'){
+                result = (value * cvalue)
+            }
+            if(type === 'string'){
+                result = (value * (+cvalue))
+            }
+        }
     }
-    else{ 
-    if(method === 'plus'){  
-        if (type === 'number'|| type === 'float'){
-            result = (value += cvalue)
-        }
-        if(type === 'string'){
-            result = (value += (+cvalue))
-        }
-    }
-    if (method === 'minus'){
-        if (type === 'number'|| type === 'float'){
-            result = (value -= cvalue)
-        }
-        if(type === 'string'){
-            result = (value -= (+cvalue))
-        }
-    }}
-    return  result
+        return  result
 }
 
 let CalcFunc =  function(startStrokeNumber){
@@ -34,6 +53,7 @@ let CalcFunc =  function(startStrokeNumber){
     }
 
     return{
+        // getter for check the number
         getNumber: function(){
             console.log(`value now is ${result}`)
             return result
@@ -41,7 +61,7 @@ let CalcFunc =  function(startStrokeNumber){
         plus: function(cvalue){
             let type = typeof cvalue
             result = checkType(value,cvalue,type, 'plus')
-            if (result<Number.MAX_SAFE_INTEGER){
+            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
                 console.log(result)
                 return result
             }else {
@@ -53,7 +73,7 @@ let CalcFunc =  function(startStrokeNumber){
         minus: function(cvalue){
             let type = typeof cvalue
             result = checkType(value,cvalue,type, 'minus')
-            if (result>Number.MIN_SAFE_INTEGER){
+            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
                 console.log(result)
                 return result
             }else {
@@ -62,26 +82,45 @@ let CalcFunc =  function(startStrokeNumber){
         },
 
         divide: function(cvalue){
-
+            let type = typeof cvalue
+            result = checkType(value,cvalue,type, 'divide')
+            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
+                console.log(result)
+                return result
+            }else {
+                console.log('error number')
+            }
 
         },
         multiple: function(cvalue){
-            let result = (value * (+cvalue))
-            if((result<Number.MAX_SAFE_INTEGER)){
+            let type = typeof cvalue
+            result = checkType(value,cvalue,type, 'multiply')
+            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
+                console.log(result)
                 return result
-            }else{
-                console.log('your number so big, use bid int :)')
+            }else {
+                console.log('error number')
             }
         }
     }
 }
 
-let value = CalcFunc(12344443)
 
-value.minus('1235345634')
-value.getNumber()
-// console.log(value.plus())
-// console.log(Number.MAX_SAFE_INTEGER)
-// console.log(value.plus('2341231231231223123125556'))
-// console.log(value.plus(2345556))
-// console.log(value.multiple('15'))
+// Check result of code 
+// Watch in console :)
+let plus = CalcFunc(100000)
+let minus = CalcFunc(132423234234)
+let divide = CalcFunc(100000000000)
+let multiple = CalcFunc(124556)
+
+plus.plus(1324245345345)
+plus.getNumber()
+
+minus.minus(132423234234)
+minus.getNumber()
+
+divide.divide(50000)
+divide.getNumber()
+
+multiple.multiple(2544562)
+multiple.getNumber()
