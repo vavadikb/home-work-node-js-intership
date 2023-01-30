@@ -1,126 +1,79 @@
-// function for checking type and arithmetic logic 
-    let checkType = function(value,cvalue, type, method){
-        if (type == null || type == undefined){
-            console.log('ReferenceError')
-            return undefined
-        }
-        else{ 
-        if(method === 'plus'){  
-            if (type === 'number'|| type === 'float'){
-                result = (value += cvalue)
-            }
-            if(type === 'string'){
-                //convert string to number
-                result = (value += (+cvalue))
-            }
-        }
-        if (method === 'minus'){
-            if (type === 'number'|| type === 'float'){
-                result = (value -= cvalue)
-            }
-            if(type === 'string'){
-                result = (value -= (+cvalue))
-            }
-        }
-        if(method === 'divide'){
-            if (type === 'number'|| type === 'float'){
-                result = (value / cvalue)
-            }
-            if(type === 'string'){
-                result = (value / (+cvalue))
-            }
-        }
-        if (method === 'multiply'){
-            if (type === 'number'|| type === 'float'){
-                result = (value * cvalue)
-            }
-            if(type === 'string'){
-                result = (value * (+cvalue))
-            }
-        }
-    }
-        return  result
-}
+        let result = []
+        let numbers1 = []
+        let numbers2 = []
+        let number1 = '99999999999999997556567567557231111111111111111113'
+        let number2 = '1112323234545645342323232323'
 
-let CalcFunc =  function(startStrokeNumber){
-    let value
-    let result = 0 
-    if (typeof startStrokeNumber == 'string'){
-        value = +startStrokeNumber
-    }
-    if (typeof startStrokeNumber == 'number'){
-        value = startStrokeNumber
-    }
-
-    return{
-        // getter for check the number
-        getNumber: function(){
-            console.log(`value now is ${result}`)
-            return result
-        },
-        plus: function(cvalue){
-            let type = typeof cvalue
-            result = checkType(value,cvalue,type, 'plus')
-            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
-                console.log(result)
-                return result
-            }else {
-                console.log('error number')
+        function toArr(number, arr){
+            let lengthStr = (number.split('').length)/16
+            for (let i = 0; i<(lengthStr); i++){
+                let b = number.split('', 16).join('')
+                let res = (+b)
+                if(res<Number.MAX_SAFE_INTEGER){
+                    number = number.substring(16)
+                    arr.push(b)
+                } else{
+                    b = number.split('',15).join('')
+                    number = number.substring(15)
+                    arr.push(b)
+                }
             }
-        
-        },
+            console.log(arr)
+        }
 
-        minus: function(cvalue){
-            let type = typeof cvalue
-            result = checkType(value,cvalue,type, 'minus')
-            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
-                console.log(result)
-                return result
-            }else {
-                console.log('error number')
+
+        toArr(number1,numbers1) // [999999999999999,975565675675572,3111111111111111,1113]
+        toArr(number2, numbers2) // [1112323234545645,342323232323]
+        console.log(`numbers1 is [${numbers1}], numbers 2 is [${numbers2}]`)
+        plusing(numbers1,numbers2,result)
+
+        function plusing(numbers1,numbers2,result){
+            let integer = 1
+            for(let i = 0; i<numbers1.length; i++){
+                for(let i = 0; i<(numbers1.length - numbers2.length);i++){
+                    numbers2.unshift(0)
+                }
+                result[i] = (+numbers1[numbers1.length - integer]) +(+numbers2[numbers2.length - integer])
+                integer++
             }
-        },
+            result = result.reverse()
+            console.log(result)
+        }
 
-        divide: function(cvalue){
-            let type = typeof cvalue
-            result = checkType(value,cvalue,type, 'divide')
-            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
-                console.log(result)
-                return result
-            }else {
-                console.log('error number')
-            }
 
-        },
-        multiple: function(cvalue){
-            let type = typeof cvalue
-            result = checkType(value,cvalue,type, 'multiply')
-            if (result < Number.MAX_SAFE_INTEGER && result > Number.MIN_SAFE_INTEGER){
-                console.log(result)
-                return result
-            }else {
-                console.log('error number')
+
+        let CalcFunc = function (startValue){
+            let startValues = []
+            let cvalues = []
+            let result = []
+            console.log()
+            return{
+                getNumber: function(){
+                    console.log(result)
+                },
+                plus: function(cvalue){                   
+                    toArr(cvalue, cvalues)
+                    toArr(startValue,startValues)
+                    console.log(startValues, 'start numbers is ', cvalues)
+                    plusing(startValues,cvalues,result)
+
+                    return result
+                },
+                
+                
+                
+                minus: function(string){
+
+                },
+                devide: function(string){
+
+                },
+                multiply: function(string){
+
+                }
             }
         }
-    }
-}
 
-
-// Check result of code 
-// Watch in console :)
-let plus = CalcFunc(100000)
-let minus = CalcFunc(132423234234)
-let divide = CalcFunc(100000000000)
-let multiple = CalcFunc(124556)
-
-plus.plus(1324245345345)
-plus.getNumber()
-
-minus.minus(132423234234)
-minus.getNumber()
-
-divide.divide(50000)
-divide.getNumber()
-
-multiple.multiple(2544562)
-multiple.getNumber()
+        let check = CalcFunc(number1)
+        check.plus(number2)
+        check.getNumber()
