@@ -12,5 +12,7 @@ const debounce = (fn, wait) =>{
 }
 
 
+hello = debounce(hello,1000)
 
-console.log(debounce(hello, 100 ))
+hello()
+

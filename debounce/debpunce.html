@@ -12,10 +12,7 @@
         function onChange(e){
             console.log(e.target.value)
         }
-        function hello(){
-            console.log('hello world')
-        }
-
+        
         const debounce = (fn, wait) =>{
             let timeout
             return function (){
@@ -26,10 +23,6 @@
         }
     
         onChange = debounce(onChange, 1000)
-        hello = debounce(hello,1000)
-
-        hello()
-
 
         document.getElementById('search').addEventListener('keyup',onChange)
 
