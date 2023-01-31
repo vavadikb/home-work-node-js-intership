@@ -12,18 +12,24 @@
         function onChange(e){
             console.log(e.target.value)
         }
+        function hello(){
+            console.log('hello world')
+        }
 
         const debounce = (fn, wait) =>{
             let timeout
             return function (){
                 const fnCall = () => {fn.apply(this, arguments)}
-            
                 clearTimeout(timeout)
                 timeout = setTimeout(fnCall, wait)
             }
         }
     
         onChange = debounce(onChange, 1000)
+        hello = debounce(hello,1000)
+
+        hello()
+
 
         document.getElementById('search').addEventListener('keyup',onChange)
 
