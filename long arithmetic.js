@@ -1,77 +1,153 @@
-let result = []
-let numbers1 = []
-let numbers2 = []
-let number1 = '999999998223997556567567557231111111111111111113'
-let number2 = '1112323234545645342323232323'
+  let first = '10000000000000000000000000000000';
+  let  second = '234859234879342897893427893274';
 
-function toArr(number, arr){
-    let lengthStr = (number.split('').length)/16
-    for (let i = 0; i<(lengthStr); i++){
-        let b = number.split('', 16).join('')
-        let res = (+b)
-        if(res<Number.MAX_SAFE_INTEGER){
-            number = number.substring(16)
-            arr.push(b)
-        } else{
-            b = number.split('',15).join('')
-            number = number.substring(15)
-            arr.push(b)
-        }
+
+
+  function findSum(first, second) {
+      let  sum = '';
+      let  carry = 0;
+      let  diff = second.length - first.length;
+      for (i = first.length - 1; i >= 0; i--) {
+          let  temp =
+              (Number(first.charAt(i)) % 10) +
+              (Number(second.charAt(i + diff)) % 10) +
+              carry;
+          if (temp >= 10) {
+              sum = (temp % 10) + sum;
+              carry = Math.floor(temp / 10);
+          } else {
+              sum = temp + sum;
+              carry = 0;
+          }
+      }
+      if (carry) {
+          sum = carry + sum;
+      }
+      return sum;
+  }
+
+  function difference(max, min) {
+    max = max.split('')
+        .reverse();
+    min = min.split('')
+        .reverse();
+    let  len = max.length,
+        result = [];
+    for (let  i = 0, b = 0, c = 0; i < len; i++) {
+        b = max[i] - (min[i] || 0) + c;
+        result[i] = b < 0 ? (c = -1, 10 + b) : (c = 0, b)
     }
-    console.log(arr)
+    return result.reverse()
+        .join('')
+        .replace(/^0+/, '');
 }
 
 
-function plusing(numbers1,numbers2,result){
-    let integer = 1
-    for(let i = 0; i<numbers1.length; i++){
-        let res =  (+numbers1[numbers1.length - integer]) + (+numbers2[numbers2.length - integer])
-        for(let i = 0; i<(numbers1.length - numbers2.length);i++){
-            numbers2.unshift(0)
-        }
-        if(res<Number.MAX_SAFE_INTEGER){
-            result[i] = res
-            integer++
-        }
+
+
+  function divideFunc(number,divisor){
+      let ans="";
+      let idx = 0;
+        let temp=number[idx]-'0';
+      while (temp < divisor){
+          temp = (temp * 10 +
+          (number[idx + 1]).charCodeAt(0) -
+                 ('0').charCodeAt(0));
+          idx += 1;
+      }
+
+      idx += 1;
+       
+      while(number.length>idx){
+          ans += String.fromCharCode
+          (Math.floor(temp / divisor) +
+          ('0').charCodeAt(0));
+         
+          temp = ((temp % divisor) * 10 +
+          (number[idx]).charCodeAt(0) - ('0').charCodeAt(0));
+          idx += 1;
+      }
+       
+      ans += String.fromCharCode
+      (Math.floor(temp / divisor) +
+      ('0').charCodeAt(0));
+       
+      if(ans.length==0)
+          return "0";
+      return ans;
+  }
+
+
+  function multiplyFunc(a, b) {
+    var aa = a.split('').reverse();
+    var bb = b.split('').reverse();
+  
+    var stack = [];
+  
+    for (var i = 0; i < aa.length; i++) {
+      for (var j = 0; j < bb.length; j++) {
+        var m = aa[i] * bb[j];
+        stack[i + j] = (stack[i + j]) ? stack[i + j] + m : m;
+      }
     }
-    result = result.reverse()
-    console.log(result)
-}
+  
+    for (var i = 0; i < stack.length; i++) {
+      var num = stack[i] % 10;
+      var move = Math.floor(stack[i] / 10);
+      stack[i] = num;
+  
+      if (stack[i + 1])
+        stack[i + 1] += move;
+      else if (move != 0)
+        stack[i + 1] = move;
+    }
+  
+    return stack.reverse().join('');
+  }
 
+  let CalcFunc = function (firtst){
+    let result = 0
 
-
-let CalcFunc = function (startValue){
-    let startValues = []
-    let cvalues = []
-    let result = []
-    console.log()
     return{
         getNumber: function(){
-            console.log(result)
+            console.log(` result is ${result}`)
         },
-        plus: function(cvalue){                   
-            toArr(cvalue, cvalues)
-            toArr(startValue,startValues)
-            console.log(startValues, 'start numbers is ', cvalues)
-            plusing(startValues,cvalues,result)
 
-            return result
+        plus: function(second){
+            result = findSum(first,second)
         },
-        
-        
-        
-        minus: function(string){
-
-        },
-        devide: function(string){
+            
+        minus: function(second){
+            if (firtst.length >= second.length) {
+                result = difference(first, second);
+            } else {
+            result = difference(second, first);
+            }
 
         },
-        multiply: function(string){
-
+        divide: function(second){
+        result = divideFunc(first, +second)
+        },
+        multiply: function(second){
+        result = multiplyFunc(first,second)
         }
     }
-}
+  }
 
-let check = CalcFunc('11111111111111111')
-check.plus('2222222222222222222')
-check.getNumber()
+
+  /// check the results
+  let plus = CalcFunc(first)
+  plus.plus(second)
+  plus.getNumber()
+
+  let minus = CalcFunc(first)
+  minus.minus(second)
+  minus.getNumber()
+  
+  let multiply = CalcFunc(first)
+  multiply.multiply(second)
+  multiply.getNumber()
+
+  let divide = CalcFunc(first)
+  divide.divide(second)
+  divide.getNumber()
