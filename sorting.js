@@ -1,5 +1,6 @@
 
-let arraySizes = [2, 5, 10, 50, 100, 500, 1000, 5000]
+let sortArrLength = 2
+let arraySizes = [sortArrLength]
 
 
 function bubbleSort(arr) {
@@ -41,11 +42,20 @@ function quickSort(array, start = 0, end = array.length - 1) {
     return array;
   }
 
+
+// makes arraySize to 500 with step 1 
+for (let i=0; arraySizes.length<500;i++){
+  sortArrLength++
+  arraySizes.push(sortArrLength)
+}
+
+// makes sorting for every one varible of array
 for(let i =0; i<arraySizes.length;i++){
     let size = arraySizes[i]
     let randomArray = Array.from({ length: size }, () => Math.floor(Math.random() * size*1000))
     result(randomArray)
-  }
+}
+
 
 
 function result (array){
@@ -75,23 +85,32 @@ function result (array){
     bubbleSort(array)
     endTime = Date.now()
     reverseRes.bubbleS = endTime - startTime
-    console.log(`Bubble sort result: randomRes:${randomRes.bubbleS}, sortres: ${sortRes.bubbleS}, reverseRes: ${reverseRes.bubbleS}`)
 
+    // show result for bubble sort
+    console.log(`Bubble sort result: randomRes:${randomRes.bubbleS}, sortRes: ${sortRes.bubbleS}, reverseRes: ${reverseRes.bubbleS}`)
+
+
+    // time for random array
     startTime = Date.now()
+    quickSort(arrQuick)
     endTime = Date.now()
     sortRes.quickS = endTime - startTime
 
+
+    // time for sorted array
     startTime = Date.now()
     quickSort(arrQuick)
     endTime = Date.now()
     reverseRes.quickS
 
+
+    // time for reversed array
     startTime = Date.now()
     arrQuick.reverse()
     quickSort(arrQuick)
     endTime = Date.now()
     randomRes.quickS = endTime - startTime
 
-    console.log(`Quick sort result: randomRes:${randomRes.quickS}, sortres: ${sortRes.quickS}, reverseRes: ${reverseRes.quickS}`)
+    console.log(`Quick sort result: randomRes:${randomRes.quickS}, sortRes: ${sortRes.quickS}, reverseRes: ${reverseRes.quickS}`)
 }
 
