@@ -1,6 +1,5 @@
 
 let arraySizes = [2, 5, 10, 50, 100, 500, 1000, 5000]
-let randomArray
 
 
 function bubbleSort(arr) {
@@ -42,10 +41,10 @@ function quickSort(array, start = 0, end = array.length - 1) {
     return array;
   }
 
-
 for(let i =0; i<arraySizes.length;i++){
     let size = arraySizes[i]
-    randomArray = Array.from({ length: size }, () => Math.floor(Math.random() * size*1000))
+    let randomArray = Array.from({ length: size }, () => Math.floor(Math.random() * size*1000))
+    result(randomArray)
   }
 
 
@@ -96,5 +95,3 @@ function result (array){
     console.log(`Quick sort result: randomRes:${randomRes.quickS}, sortres: ${sortRes.quickS}, reverseRes: ${reverseRes.quickS}`)
 }
 
-
-result(randomArray)
