@@ -68,10 +68,10 @@ list.add(1);
 list.add(2);
 list.add(3);
 list.add(4);
-console.log(list.hasLoop()); // false
-
 list.add(5);
 list.add(6);
+
+
 const node3 = list.find(3);
 node3.next = list.head.next.next;
 console.log(list.hasLoop()); // true
